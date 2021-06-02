@@ -42,4 +42,30 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    recipe_type = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Recipe('{self.title}', '{self.recipe_type}', '{self.date_posted}', '{self.user_id}')"
+
+class Ingredient(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+
+class Measure(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String(30), nullable=False)
+
+class RecipeIngredient(db.Model):
+    recipe_id = db.Column(db.Integer, nullable=False)
+    ingredient_id = db.Column(db.Integer, nullable=False)
+    measure_id = db.Column(db.Integer)
+    amount = db.Column(db.Integer)
 
